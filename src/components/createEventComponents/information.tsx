@@ -43,6 +43,7 @@ export default function Information(
         } else {
             formik.handleSubmit()
         }
+        
     }  
 
     return (
