@@ -28,7 +28,6 @@ export default function DashboardLayout(
 ) {
 
     const { mainBackgroundColor, headerTextColor, primaryColor } = useCustomTheme()
-
     const { setSearchValue } = useSearchStore((state) => state)
     const pathname = usePathname()
     const query = useSearchParams();
