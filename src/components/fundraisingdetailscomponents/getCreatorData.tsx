@@ -12,14 +12,15 @@ import { CustomButton, UserImage } from '../shared';
 import { capitalizeFLetter } from '@/helpers/utils/capitalLetter';
 import { textLimit } from '@/helpers/utils/textlimit';
 import { useColorMode } from '../ui/color-mode';
+import Cookies from "js-cookie"
 
 export default function GetCreatorData({ userData, donation, data: donationData}: { userData: IUser, data?: any, donation?: boolean }) {
 
     const { userId: user_index } = useDetails((state) => state);
     const { secondaryBackgroundColor } = useCustomTheme()
     const router = useRouter();
-    
-    let token = localStorage.getItem("token")
+
+    const token = Cookies.get("chase_token") 
     const { colorMode } = useColorMode();
 
     const clickHandler = () => {
@@ -27,6 +28,7 @@ export default function GetCreatorData({ userData, donation, data: donationData}
             // router.push("/share/auth/login?type=EVENT&typeID=" + id)
         } else {
             // router.push("/dashboard/profile/" + userData?.userId)
+            // https://chasescrolldashboardpage.vercel.app/dashboard/profile/688aad779b46407d16c79bd8?theme=light
             window.location.href = `${DASHBOARDPAGE_URL}/dashboard/profile/${userData?.userId}?token=${token}&theme=${colorMode}`; 
         }
     } 
