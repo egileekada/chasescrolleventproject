@@ -1,18 +1,17 @@
 import { Chat } from '@/helpers/models/chat';
 import { IUser } from '@/helpers/models/user';
 import httpService from '@/helpers/services/httpService';
-import { WEBSITE_URL } from '@/helpers/services/urls';
+import { DASHBOARDPAGE_URL, WEBSITE_URL } from '@/helpers/services/urls';
 import { useDetails } from '@/helpers/store/useUserDetails';
 import useCustomTheme from '@/hooks/useTheme';
 import { Flex, Text } from '@chakra-ui/react'
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
-import React from 'react'
-import { FaStar } from 'react-icons/fa' 
+import { useRouter } from 'next/navigation'; 
 import UsersDonation from './usersDonating';
 import { CustomButton, UserImage } from '../shared';
 import { capitalizeFLetter } from '@/helpers/utils/capitalLetter';
 import { textLimit } from '@/helpers/utils/textlimit';
+import { useColorMode } from '../ui/color-mode';
 
 export default function GetCreatorData({ userData, donation, data: donationData}: { userData: IUser, data?: any, donation?: boolean }) {
 
@@ -21,14 +20,17 @@ export default function GetCreatorData({ userData, donation, data: donationData}
     const router = useRouter();
     
     let token = localStorage.getItem("token")
+    const { colorMode } = useColorMode();
 
     const clickHandler = () => {
         if (!user_index) {
             // router.push("/share/auth/login?type=EVENT&typeID=" + id)
         } else {
-            router.push("/dashboard/profile/" + userData?.userId)
+            // router.push("/dashboard/profile/" + userData?.userId)
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/profile/${userData?.userId}?token=${token}&theme=${colorMode}`; 
         }
     } 
+ 
 
     const { isPending: chatCreationLoading, mutate } = useMutation({
         mutationFn: () =>
