@@ -1,15 +1,17 @@
+import { Box, Flex, HStack, Text } from "@chakra-ui/react";
+import React, { useRef } from "react";
+import QRCode from "react-qr-code";
+import { toPng } from "html-to-image";
 
-import { Box, Flex, HStack, Text } from "@chakra-ui/react"; 
-import React from "react"; 
-import QRCode from "react-qr-code";  
-import html2canvas from "html2canvas"; 
 import { ShareType } from "@/helpers/models/share";
 import useCustomTheme from "@/hooks/useTheme";
 import { SHARE_URL } from "@/helpers/services/urls";
 import { capitalizeFLetter } from "@/helpers/utils/capitalLetter";
 import { textLimit } from "@/helpers/utils/textlimit";
+
 import { CustomButton } from "../shared";
 import CopyRightText from "../shared/copyRightText";
+
 import { IoIosClose } from "react-icons/io";
 
 interface Props {
@@ -17,153 +19,184 @@ interface Props {
   close: any;
   data?: any;
   name?: string;
-  type?: ShareType
-  affiliateID: any
+  type?: ShareType;
+  affiliateID: any;
 }
 
 function Qr_code(props: Props) {
   const { id, close, data, type, name, affiliateID } = props;
 
-  const {
-    bodyTextColor, 
-    primaryColor,
-  } = useCustomTheme(); 
+  const { bodyTextColor, primaryColor } = useCustomTheme();
 
-  const componentRef: any = React.useRef("");
+  const componentRef = useRef<HTMLDivElement>(null);
 
-  function downloadComponentAsPNG() {
+  const downloadComponentAsPNG = async () => {
     if (!componentRef.current) return;
-  
-    html2canvas(componentRef.current).then((canvas: any) => {
-      const link = document.createElement('a');
-      link.download = data?.eventName ? data?.eventName : data?.name+" QRcode";
-      link.href = canvas.toDataURL('image/png');
+
+    try {
+      const dataUrl = await toPng(componentRef.current, {
+        cacheBust: true,
+        pixelRatio: 3,
+        backgroundColor: "#ffffff",
+      });
+
+      const link = document.createElement("a");
+      link.download = `${
+        data?.eventName || data?.name || "QRCode"
+      }.png`;
+
+      link.href = dataUrl;
       link.click();
-    });
-  }
+    } catch (err) {
+      console.error("Download failed", err);
+    }
+  };
 
   const url_link =
     type === "EVENT"
-      ? `${SHARE_URL}${"/event/"}${id}/opengraph${affiliateID ? `?affiliateID=${affiliateID}` : ``}` :
-        type === "RENTAL" ? `${SHARE_URL}${"/rental?id="}${id}`:
-        type === "SERVICE" ? `${SHARE_URL}${"/service?id="}${id}`:
-        type === "KIOSK" ? `${SHARE_URL}${"/product?id="}${id}`:
-        type === "DONATION" ? `${SHARE_URL}${"/fundraiser/"}${id}/opengraph`
-        : `${SHARE_URL}/event/${id}/opengraph`;
-
+      ? `${SHARE_URL}/event/${id}/opengraph${
+          affiliateID ? `?affiliateID=${affiliateID}` : ""
+        }`
+      : type === "RENTAL"
+      ? `${SHARE_URL}/rental?id=${id}`
+      : type === "SERVICE"
+      ? `${SHARE_URL}/service?id=${id}`
+      : type === "KIOSK"
+      ? `${SHARE_URL}/product?id=${id}`
+      : type === "DONATION"
+      ? `${SHARE_URL}/fundraiser/${id}/opengraph`
+      : `${SHARE_URL}/event/${id}/opengraph`;
 
   return (
-    <Flex flexDir={"column"} roundedTop={"lg"} alignItems={"center"} pb={"8"}>
+    <Flex
+      flexDir="column"
+      roundedTop="lg"
+      alignItems="center"
+      pb="8"
+        bg="white"
+      position="relative"
+    >
       <Box
         onClick={() => close(false)}
-        cursor={"pointer"}
-        width={"25px"}
+        cursor="pointer"
+        width="25px"
         zIndex={30}
-        position={"absolute"}
-        top={"2"}
-        right={"4"}
+        position="absolute"
+        top="2"
+        right="4"
       >
-        <IoIosClose size={"30px"} color="white" />
+        <IoIosClose size="30px" color="white" />
       </Box>
+
       <Flex
-        height={["520px"]}
         ref={componentRef}
-        flexDir={"column"}
-        alignItems={"center"}
-        width={"full"} 
-        px={"2"}
-        roundedTop={"lg"}
+        flexDir="column"
+        alignItems="center"
+        width="100%" 
+        bg="white"
+        borderRadius="20px"
+        overflow="hidden"
       >
         <Box
-          height={"300px"}
-          roundedTopLeft={"20px"}
-          width={"full"}
-          roundedBottom={"full"}
-          mt={"2"}  
-          zIndex={10}
-          style={{ background: "#5D70F9" }}
+          h="300px"
+          w="100%"
+          bg="#5D70F9"
+          borderBottomRadius="full"
         />
 
         <Flex
-          position={"absolute"}
-          bg={"transparent"}
-          left={"0px"}
-          right={"0px"}
-          flexDir={"column"}
-          alignItems={"center"}
-          width={"full"}
-          roundedTop={"lg"} 
+          position="absolute"
+          top="0"
+          left="0"
+          right="0"
+          flexDir="column"
+          alignItems="center"
+          pt="6"
         >
-          <Flex pt={"6"} zIndex={20}>
-            <HStack justifyContent={"center"}>
-              {/* <Image src='/assets/images/chasescroll-logo.png' width={30} height={30} alt='logo' /> */}
-              <Text
-                fontWeight={"bold"}
-                fontSize={"24px"}
-                color="#FFF"
-              >
-                Chasescroll
-              </Text>
-            </HStack>
-          </Flex>
-          <Flex
-            zIndex={20}
-            alignItems={"center"}
-            flexDir={"column"}
-            roundedTop={"lg"}
-            pt={"4"}
-            color={"white"}
-            width={"full"}
-          >
-            {type && (
-              <Text fontSize={"14px"}>{capitalizeFLetter(type)} Name</Text>
-            )}
-
-            {!type && (
-              <Text fontSize={"14px"}>{type === "EVENT" ? "Event" : type === "RENTAL" ? "Rental" : type === "SERVICE" ? "Service" : type === "KIOSK" ? "Kiosk" : "Fundraising"} Name</Text>
-            )}
-            <Text fontSize={"18px"} fontWeight={"bold"}>
-              {textLimit(name ? name : data?.eventName ? data?.eventName : data?.name, 20)}
-            </Text>
-          </Flex>
-          <Flex justifyContent={"center"} flex={1} width={"full"} pt={"6"}>
-            <Box
-              zIndex={20}
-              width={["60%", "50%"]}
-              shadow={"lg"}
-              bg={"white"}
-              p={"3"}
-              rounded={"md"}
+          <HStack>
+            <Text
+              color="white"
+              fontWeight="bold"
+              fontSize="24px"
             >
-              <QRCode
-                style={{
-                  height: "auto",
-                  maxWidth: "100%",
-                  width: "100%",
-                  zIndex: 20,
-                }}
-                value={url_link}
-                viewBox={`0 0 256 256`}
-              />
-            </Box>
-          </Flex>
-          {type ? (
-            <Text mt={"4"} color={bodyTextColor}>Scan to Confirm Your Order</Text>
-          ) : (
-            <Text mt={"4"} color={bodyTextColor}>
-              Scan here and get Your {type === "EVENT" ? "Event" : type === "RENTAL" ? "Rental" : type === "SERVICE" ? "Service" : type === "KIOSK" ? "Kiosk" : "Fundraising"} Link
+              Chasescroll
             </Text>
-          )}
-          <Text fontSize={"xs"} textAlign={"center"}>
+          </HStack>
+
+          <Flex
+            mt="4"
+            flexDir="column"
+            alignItems="center"
+            color="white"
+          >
+            <Text fontSize="14px">
+              {type
+                ? `${capitalizeFLetter(type)} Name`
+                : "Name"}
+            </Text>
+
+            <Text
+              fontWeight="bold"
+              fontSize="18px"
+            >
+              {textLimit(
+                name ||
+                  data?.eventName ||
+                  data?.name ||
+                  "",
+                20
+              )}
+            </Text>
+          </Flex>
+
+          <Box
+            mt="8"
+            bg="white"
+            p="4"
+            rounded="lg"
+            shadow="lg"
+            w="220px"
+          >
+            <QRCode
+              value={url_link}
+              size={200}
+              style={{
+                width: "100%",
+                height: "100%",
+              }}
+            />
+          </Box>
+
+          <Text mt="6" color={bodyTextColor}>
+            {type
+              ? "Scan to Confirm Your Order"
+              : `Scan here and get your ${
+                  type === "EVENT"
+                    ? "Event"
+                    : type === "RENTAL"
+                    ? "Rental"
+                    : type === "SERVICE"
+                    ? "Service"
+                    : type === "KIOSK"
+                    ? "Kiosk"
+                    : "Fundraising"
+                } Link`}
+          </Text>
+
+          <Text fontSize="xs" mt="3">
             <CopyRightText />
           </Text>
         </Flex>
+
+        <Box h="220px" />
       </Flex>
+
       <CustomButton
-        maxWidth={"300px"}
+        mt="6"
+        maxWidth="300px"
         backgroundColor={primaryColor}
-        onClick={() => downloadComponentAsPNG()}
-        text="Download QR-Code"
+        text="Download QR Code"
+        onClick={downloadComponentAsPNG}
       />
     </Flex>
   );

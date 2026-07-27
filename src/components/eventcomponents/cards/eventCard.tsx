@@ -96,7 +96,7 @@ export default function EventCard({ event }: { event: IEventType }) {
                     // />
 
                     <Flex
-                        zIndex={"20"}
+                        // zIndex={"0"}
                         pos={"absolute"}
                         bottom={"4"}
                         right={"4"}

@@ -239,49 +239,49 @@ function SendMessage(props: Props) {
                     id="Vector"
                     d="M2 9V6.5C2 4.01 4.01 2 6.5 2H9"
                     stroke={primaryColor}
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                   <path
                     id="Vector_2"
                     d="M15 2H17.5C19.99 2 22 4.01 22 6.5V9"
                     stroke={primaryColor}
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                   <path
                     id="Vector_3"
                     d="M22 16V17.5C22 19.99 19.99 22 17.5 22H16"
                     stroke={primaryColor}
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                   <path
                     id="Vector_4"
                     d="M9 22H6.5C4.01 22 2 19.99 2 17.5V15"
                     stroke={primaryColor}
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                   <path
                     id="Vector_5"
                     d="M17 9.5V14.5C17 16.5 16 17.5 14 17.5H10C8 17.5 7 16.5 7 14.5V9.5C7 7.5 8 6.5 10 6.5H14C16 6.5 17 7.5 17 9.5Z"
                     stroke={primaryColor}
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                   <path
                     id="Vector_6"
                     d="M19 12H5"
                     stroke={primaryColor}
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </g>
               </g>
@@ -300,8 +300,8 @@ function SendMessage(props: Props) {
             fill="none"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M21.5 40.6875C31.6482 40.6875 39.875 32.4607 39.875 22.3125C39.875 12.1643 31.6482 3.9375 21.5 3.9375C11.3518 3.9375 3.125 12.1643 3.125 22.3125C3.125 25.608 3.99256 28.7009 5.51175 31.3753L3.125 40.6875L12.7258 38.4612C15.3331 39.8809 18.3223 40.6875 21.5 40.6875ZM21.5 37.8606C30.087 37.8606 37.0481 30.8995 37.0481 22.3125C37.0481 13.7255 30.087 6.76442 21.5 6.76442C12.913 6.76442 5.95192 13.7255 5.95192 22.3125C5.95192 25.628 6.98966 28.701 8.75804 31.2247L7.36538 36.4471L12.6799 35.1185C15.186 36.8479 18.2248 37.8606 21.5 37.8606Z"
               fill="#BFC8D0"
             />
@@ -310,8 +310,8 @@ function SendMessage(props: Props) {
               fill="url(#paint0_linear_1180_46679)"
             />
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M21.5 39.375C31.6482 39.375 39.875 31.1482 39.875 21C39.875 10.8518 31.6482 2.625 21.5 2.625C11.3518 2.625 3.125 10.8518 3.125 21C3.125 24.2955 3.99256 27.3884 5.51175 30.0628L3.125 39.375L12.7258 37.1487C15.3331 38.5684 18.3223 39.375 21.5 39.375ZM21.5 36.5481C30.087 36.5481 37.0481 29.587 37.0481 21C37.0481 12.413 30.087 5.45192 21.5 5.45192C12.913 5.45192 5.95192 12.413 5.95192 21C5.95192 24.3155 6.98966 27.3885 8.75804 29.9122L7.36538 35.1346L12.6799 33.806C15.186 35.5354 18.2248 36.5481 21.5 36.5481Z"
               fill="white"
             />
@@ -328,8 +328,8 @@ function SendMessage(props: Props) {
                 y2="36.75"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stop-color="#5BD066" />
-                <stop offset="1" stop-color="#27B43E" />
+                <stop stopColor="#5BD066" />
+                <stop offset="1" stopColor="#27B43E" />
               </linearGradient>
             </defs>
           </svg>
@@ -365,8 +365,8 @@ function SendMessage(props: Props) {
                 y2="39.266"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stop-color="#18ACFE" />
-                <stop offset="1" stop-color="#0163E0" />
+                <stop stopColor="#18ACFE" />
+                <stop offset="1" stopColor="#0163E0" />
               </linearGradient>
             </defs>
           </svg>
