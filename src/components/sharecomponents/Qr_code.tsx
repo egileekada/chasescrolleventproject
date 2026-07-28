@@ -26,7 +26,7 @@ interface Props {
 function Qr_code(props: Props) {
   const { id, close, data, type, name, affiliateID } = props;
 
-  const { bodyTextColor, primaryColor } = useCustomTheme();
+  const { bodyTextColor, primaryColor, mainBackgroundColor, headerTextColor } = useCustomTheme();
 
   const componentRef = useRef<HTMLDivElement>(null);
 
@@ -73,7 +73,8 @@ function Qr_code(props: Props) {
       roundedTop="lg"
       alignItems="center"
       pb="8"
-        bg="white"
+      color={headerTextColor}
+        bg={mainBackgroundColor}
       position="relative"
     >
       <Box
@@ -85,15 +86,14 @@ function Qr_code(props: Props) {
         top="2"
         right="4"
       >
-        <IoIosClose size="30px" color="white" />
+        <IoIosClose size="30px" />
       </Box>
 
       <Flex
         ref={componentRef}
         flexDir="column"
         alignItems="center"
-        width="100%" 
-        bg="white"
+        width="100%"  
         borderRadius="20px"
         overflow="hidden"
       >
